@@ -1,10 +1,15 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackInjector = require('html-webpack-injector');
+const devMode = process.env.NODE_ENV !== 'production';
 
 function r(p) {
 	return path.resolve(__dirname, p);
 }
 
 module.exports = {
+	mode: 'development',
 	devtool: 'source-map',
 	watch: true,
 	entry: {
@@ -12,7 +17,7 @@ module.exports = {
 	},
 	output: {
 		path: r('assets'),
-		filename: 'js/[name].bundle.js'
+		filename: 'js/[name].bundle.js',
 	},
 	module: {
 		rules: [
@@ -20,43 +25,39 @@ module.exports = {
 				test: /\.js$/,
 				include: r('src/js'),
 				exclude: r('node_modules'),
-				use: ['babel-loader']
+				use: ['babel-loader'],
 			},
 			{
-				test: /\.css$/,
-				include: [
-					r('src/css')
-				],
+				test: /\.(sa|sc|c)ss$/i,
 				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: 'css/[name].css'
-						}
-					},
-					{
-						loader: 'extract-loader'
-					},
-					{
-						loader: 'css-loader?-url'
-					}
-				]
-			}
-		]
+					// devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'postcss-loader',
+					'sass-loader',
+				],
+			},
+		],
 	},
 	devServer: {
-		contentBase: r('public'),
-		port: 9000
+		static: {
+			directory: path.join(__dirname, 'public'),
+		},
+		compress: true,
+		port: 9000,
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: "webglfundamentals.org lessons",
-			template: "index.html",
+			template: 'index.html',
+			title: 'GrapesJS React component feasibility research',
 			files: {
-				css: [
-					'css/main.css'
-				]
-			}
-		})
-	]
+				css: ['css/main.css'],
+			},
+		}),
+		new HtmlWebpackInjector(),
+		new MiniCssExtractPlugin(),
+	],
+	// .concat(devMode ? [] : [new MiniCssExtractPlugin()]),
 };
+
+console.log('process.env', process.env);
