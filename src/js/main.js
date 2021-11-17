@@ -17,36 +17,36 @@ var editor = grapesjs.init({
 	blockManager: {
 		blocks: [
 			{
-				id: 'fucking_section',
+				id: 'config-object-defined-block',
+				label: '<b>Config object defined block</b>',
 				category: 'Basic',
-				label: '<b>fucking section</b>',
-				attributes: { class: 'gjs-fucking-section' },
+				attributes: { class: 'gjs-config-object-defined-block' },
 				content: `<section>
-					<h1>Fucking section</h1>
-					<div>Ehi! This is a fucking section.</div>
+					<h1>Block defined in the config object</h1>
+					<div>This is the simplest way to define a GrapesJS Block.</div>
 				</section>`,
 			},
 		],
 	},
 });
 
-editor.BlockManager.add('my-block-id', {
-	label: 'Another fucking block',
+editor.BlockManager.add('component-style-block', {
+	label: 'Component style block',
 	category: 'Basic',
 	content: {
-		attributes: { class: 'gjs-another-fucking-block' },
+		attributes: { class: 'gjs-component-style-block' },
 		tagName: 'div',
 		draggable: true,
 		components: [
 			{
 				tagName: 'span',
-				content: '<b>Some static content</b>',
+				content: '<b>The content of the Component style Block</b>',
 			},
 			{
 				tagName: 'div',
 				// use `content` for static strings, `components` string will be parsed
 				// and transformed in Components
-				components: '<span>HTML at some point</span>',
+				components: '<span>Sub components</span>',
 			},
 		],
 	},
@@ -64,4 +64,4 @@ panelManager.addPanel({
 	content: `<span>GrapesJS React component feasibility research</span>`,
 });
 
-console.log('panels:', panels);
+console.log('panels (after adding `titlePanel`):', panels);
