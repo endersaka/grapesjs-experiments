@@ -3,3 +3,14 @@ body {
 	width: auto;
 	height: auto;
 }
+
+.gjs-pn-titlePanel > span {
+	font-size: 1.4em;
+}
+
+.gjs-pn-titlePanel {
+	left: 42.5%;
+	transform: translateX(-50%);
+}
+
+

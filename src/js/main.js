@@ -51,3 +51,17 @@ editor.BlockManager.add('my-block-id', {
 		],
 	},
 });
+
+var panelManager = editor.Panels;
+var panels = panelManager.getPanels();
+
+console.log('panels:', panels);
+
+panelManager.addPanel({
+	id: 'titlePanel',
+	visible: true,
+	buttons: [],
+	content: `<span>GrapesJS React component feasibility research</span>`,
+});
+
+console.log('panels:', panels);
